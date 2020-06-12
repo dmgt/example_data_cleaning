@@ -19,9 +19,14 @@ library(here)       # package to manage relative file paths
 library(skimr)
 library(cowplot)    # package for additional plotting options
 library(gt)
+library(knitr)      # package for creating formatted output
 ```
 
 ### About the data
+- I downloaded outdoor weather data from a nearby active weather station for each field site via the National Oceanic and Atmospheric Administration’s [Local Climatological Data tool](https://www.ncdc.noaa.gov/cdo-web/datatools/lcd) for April 2017 through October 2019 from three weather stations: Stockton Metropolitan Airport (WBAN:23237, for Site 1), Merced Municipal Airport (WBAN:23257, for Site 2), and Merced 23 WSW (WBAN:93243 , for Site 3 and 4).
+- This data included hourly measurements for many variables, including dry bulb temperature, wet bulb temperature, air speed, and sky condition measurements. All weather variable names and decriptions from NOAA Local Climatological Data are documented [here](https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/LCD_documentation.pdf)
+- The weather files have already been cleaned by converting the timezone to UTC, and saving only the variables used for this example (temperature, humdidity, and wind speed)
+
 
 ### Load data
 ```{r readDeviceData}
@@ -254,6 +259,8 @@ weather_df_for_table <- outdoor_temp_per_site_baseline %>%
   mutate(delta_rh_pct = mean_hourly_rh_intervention - mean_hourly_rh_baseline)
 ```
 
+- The code below creates a summary table, which is currently saved to the `/results` folder as an image file, and embedded below. 
+
 ```{r, eval = F, include = T}
 weather_summary_table <- weather_df_for_table %>%
   gt() %>%
@@ -291,48 +298,8 @@ weather_summary_table <- weather_df_for_table %>%
     source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
 ```
 
-
-```{r eval = T,  include=F }
-# Code to format weather summary table
-weather_summary_table <- weather_df_for_table %>%
-  gt() %>%
-  tab_header(
-    title = "Outdoor environmental conditions per site",
-    subtitle = "Hourly means during April - October cooling season"
-    ) %>%
-  tab_spanner(
-    label = html("Air temperature [&deg;C]"),
-    columns = vars(mean_hourly_temp_c_baseline, mean_hourly_temp_c_intervention, delta_temp_c)
-    ) %>% 
-   fmt_number(
-    columns = vars(mean_hourly_temp_c_baseline, mean_hourly_temp_c_intervention, delta_temp_c),
-    decimals = 1
-  ) %>%
-  tab_spanner(
-    label = "Relative humidity [%]",
-    columns = vars(mean_hourly_rh_baseline, mean_hourly_rh_intervention, delta_rh_pct)
-    ) %>%  
-   fmt_number(
-    columns = vars(mean_hourly_rh_baseline, mean_hourly_rh_intervention, delta_rh_pct),
-    decimals = 0
-  ) %>%
-  cols_label(
-    site_display = html("Site"),
-    mean_hourly_temp_c_baseline =  html("Baseline"),
-    mean_hourly_temp_c_intervention = html("Intervention"),
-    delta_temp_c = html("&Delta; T"),
-    mean_hourly_rh_baseline = html("Baseline"),
-    mean_hourly_rh_intervention = html("Intervention"),
-    delta_rh_pct = html("&Delta; RH")
-  ) %>%
-  cols_align( align = "center")  %>%
-  tab_source_note(
-    source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
-  
-```
-
-```{r, echo = F, fig.width = 4}
-weather_summary_table
+```{r summarytable, echo=FALSE, fig.width = 8}
+include_graphics(here("results", "delta_t_rh_example_table.PNG"))
 ```
 
 ### Plot data
@@ -384,7 +351,19 @@ ggsave("weather_plot.png", plot = weather_plot,
 )
 ```
 
-```{r echo=FALSE}
+```{r, echo = F, fig.width = 8}
 weather_plot
 ```
+
+### Write about the data with variables calculated inline 
+
+**Here is some summary text:** 
+During the cooling season months of April – October, mean daily high temperatures ranged from `r  round(mean_daily_high_temps_c_min,1)` °C to `r round(mean_daily_high_temps_c_max,1)` °C. Cooling season mean hourly outdoor temperatures at all three locations were higher during the intervention period than the baseline period, with a mean increase of `r mean_difference_hourly_oat_c` °C. Mean hourly relative humidity and absolute humidity decreased slightly at Sites 1, 3, and 4 during the intervention compared to the baseline period , but increased at Site 2, as shown in the table above. Overall, mean measured outdoor temperature and relative humidity levels at each location during the intervention period were within 6% of values measured during the baseline period.
+
+Here is what the code to produce this text looks like with values encoded as variables: 
+
+```{r eval = F }
+During the cooling season months of April – October, mean daily high temperatures ranged from `r  round(mean_daily_high_temps_c_min,1)` °C to `r round(mean_daily_high_temps_c_max,1)` °C. Cooling season mean hourly outdoor temperatures at all three locations were higher during the intervention period than the baseline period, with a mean increase of `r mean_difference_hourly_oat_c` °C. Mean hourly relative humidity and absolute humidity decreased slightly at Sites 1, 3, and 4 during the intervention compared to the baseline period , but increased at Site 2, as shown in the table above. Overall, mean measured outdoor temperature and relative humidity levels at each location during the intervention period were within 6% of values measured during the baseline period.
+```
+
 

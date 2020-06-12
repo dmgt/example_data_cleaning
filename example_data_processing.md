@@ -20,9 +20,28 @@ library(here)       # package to manage relative file paths
 library(skimr)
 library(cowplot)    # package for additional plotting options
 library(gt)
+library(knitr)      # package for creating formatted output
 ```
 
 ### About the data
+
+  - I downloaded outdoor weather data from a nearby active weather
+    station for each field site via the National Oceanic and Atmospheric
+    Administration’s [Local Climatological Data
+    tool](https://www.ncdc.noaa.gov/cdo-web/datatools/lcd) for April
+    2017 through October 2019 from three weather stations: Stockton
+    Metropolitan Airport (WBAN:23237, for Site 1), Merced Municipal
+    Airport (WBAN:23257, for Site 2), and Merced 23 WSW (WBAN:93243 ,
+    for Site 3 and 4).
+  - This data included hourly measurements for many variables, including
+    dry bulb temperature, wet bulb temperature, air speed, and sky
+    condition measurements. All weather variable names and decriptions
+    from NOAA Local Climatological Data are documented
+    [here](https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/LCD_documentation.pdf)
+  - The weather files have already been cleaned by converting the
+    timezone to UTC, and saving only the variables used for this example
+    (temperature, humdidity, and wind
+speed)
 
 ### Load data
 
@@ -272,6 +291,11 @@ weather_df_for_table <- outdoor_temp_per_site_baseline %>%
   mutate(delta_rh_pct = mean_hourly_rh_intervention - mean_hourly_rh_baseline)
 ```
 
+  - The code below creates a summary table, which is currently saved to
+    the `/results` folder as an image file, and embedded below.
+
+<!-- end list -->
+
 ``` r
 weather_summary_table <- weather_df_for_table %>%
   gt() %>%
@@ -309,605 +333,7 @@ weather_summary_table <- weather_df_for_table %>%
     source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
 ```
 
-<!--html_preserve-->
-
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
-
-#ogcxxdrhfh .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#ogcxxdrhfh .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 4px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#ogcxxdrhfh .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#ogcxxdrhfh .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#ogcxxdrhfh .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#ogcxxdrhfh .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#ogcxxdrhfh .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#ogcxxdrhfh .gt_group_heading {
-  padding: 8px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#ogcxxdrhfh .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#ogcxxdrhfh .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#ogcxxdrhfh .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#ogcxxdrhfh .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#ogcxxdrhfh .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#ogcxxdrhfh .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 12px;
-}
-
-#ogcxxdrhfh .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ogcxxdrhfh .gt_first_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ogcxxdrhfh .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding: 4px;
-}
-
-#ogcxxdrhfh .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#ogcxxdrhfh .gt_sourcenote {
-  font-size: 90%;
-  padding: 4px;
-}
-
-#ogcxxdrhfh .gt_left {
-  text-align: left;
-}
-
-#ogcxxdrhfh .gt_center {
-  text-align: center;
-}
-
-#ogcxxdrhfh .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#ogcxxdrhfh .gt_font_normal {
-  font-weight: normal;
-}
-
-#ogcxxdrhfh .gt_font_bold {
-  font-weight: bold;
-}
-
-#ogcxxdrhfh .gt_font_italic {
-  font-style: italic;
-}
-
-#ogcxxdrhfh .gt_super {
-  font-size: 65%;
-}
-
-#ogcxxdrhfh .gt_footnote_marks {
-  font-style: italic;
-  font-size: 65%;
-}
-</style>
-
-<div id="ogcxxdrhfh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-
-<table class="gt_table">
-
-<thead class="gt_header">
-
-<tr>
-
-<th colspan="7" class="gt_heading gt_title gt_font_normal" style>
-
-Outdoor environmental conditions per
-site
-
-</th>
-
-</tr>
-
-<tr>
-
-<th colspan="7" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>
-
-Hourly means during April - October cooling
-season
-
-</th>
-
-</tr>
-
-</thead>
-
-<thead class="gt_col_headings">
-
-<tr>
-
-<th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1">
-
-Site
-
-</th>
-
-<th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3">
-
-<span class="gt_column_spanner">Air temperature
-\[°C\]</span>
-
-</th>
-
-<th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3">
-
-<span class="gt_column_spanner">Relative humidity
-\[%\]</span>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
-
-Baseline
-
-</th>
-
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
-
-Intervention
-
-</th>
-
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
-
-Δ
-T
-
-</th>
-
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
-
-Baseline
-
-</th>
-
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
-
-Intervention
-
-</th>
-
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
-
-Δ RH
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody class="gt_table_body">
-
-<tr>
-
-<td class="gt_row gt_center">
-
-Site 1
-
-</td>
-
-<td class="gt_row gt_center">
-
-21.3
-
-</td>
-
-<td class="gt_row gt_center">
-
-23.9
-
-</td>
-
-<td class="gt_row gt_center">
-
-2.6
-
-</td>
-
-<td class="gt_row gt_center">
-
-53
-
-</td>
-
-<td class="gt_row gt_center">
-
-44
-
-</td>
-
-<td class="gt_row gt_center">
-
-−9
-
-</td>
-
-</tr>
-
-<tr>
-
-<td class="gt_row gt_center">
-
-Site 2
-
-</td>
-
-<td class="gt_row gt_center">
-
-21.8
-
-</td>
-
-<td class="gt_row gt_center">
-
-22.0
-
-</td>
-
-<td class="gt_row gt_center">
-
-0.2
-
-</td>
-
-<td class="gt_row gt_center">
-
-50
-
-</td>
-
-<td class="gt_row gt_center">
-
-52
-
-</td>
-
-<td class="gt_row gt_center">
-
-2
-
-</td>
-
-</tr>
-
-<tr>
-
-<td class="gt_row gt_center">
-
-Site 3 and 4
-
-</td>
-
-<td class="gt_row gt_center">
-
-22.4
-
-</td>
-
-<td class="gt_row gt_center">
-
-22.7
-
-</td>
-
-<td class="gt_row gt_center">
-
-0.2
-
-</td>
-
-<td class="gt_row gt_center">
-
-52
-
-</td>
-
-<td class="gt_row gt_center">
-
-50
-
-</td>
-
-<td class="gt_row gt_center">
-
-−2
-
-</td>
-
-</tr>
-
-</tbody>
-
-<tfoot class="gt_sourcenotes">
-
-<tr>
-
-<td class="gt_sourcenote" colspan="7">
-
-Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site
-1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and
-4)
-
-</td>
-
-</tr>
-
-</tfoot>
-
-</table>
-
-</div>
-
-<!--/html_preserve-->
+<img src="/home/trc/example_data_cleaning/results/delta_t_rh_example_table.PNG" width="836" />
 
 ### Plot data
 
@@ -958,4 +384,25 @@ ggsave("weather_plot.png", plot = weather_plot,
 )
 ```
 
-![](example_data_processing_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](example_data_processing_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+### Write about the data with variables calculated inline
+
+**Here is some summary text:** During the cooling season months of April
+– October, mean daily high temperatures ranged from 13.3 °C to 43.9 °C.
+Cooling season mean hourly outdoor temperatures at all three locations
+were higher during the intervention period than the baseline period,
+with a mean increase of 0.8 °C. Mean hourly relative humidity and
+absolute humidity decreased slightly at Sites 1, 3, and 4 during the
+intervention compared to the baseline period , but increased at Site 2,
+as shown in the table above. Overall, mean measured outdoor temperature
+and relative humidity levels at each location during the intervention
+period were within 6% of values measured during the baseline period.
+
+Here is what the code to produce this text looks like with values
+encoded as
+variables:
+
+``` r
+During the cooling season months of April – October, mean daily high temperatures ranged from `r  round(mean_daily_high_temps_c_min,1)` °C to `r round(mean_daily_high_temps_c_max,1)` °C. Cooling season mean hourly outdoor temperatures at all three locations were higher during the intervention period than the baseline period, with a mean increase of `r mean_difference_hourly_oat_c` °C. Mean hourly relative humidity and absolute humidity decreased slightly at Sites 1, 3, and 4 during the intervention compared to the baseline period , but increased at Site 2, as shown in the table above. Overall, mean measured outdoor temperature and relative humidity levels at each location during the intervention period were within 6% of values measured during the baseline period.
+```
