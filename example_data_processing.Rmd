@@ -337,7 +337,7 @@ weather_summary_table
 
 ### Plot data
 
-```{r outdoorconditionsByIntervention, message = F, warning = F, cache = 2}
+```{r outdoorconditionsByIntervention, message = F, warning = F}
 # Draw plots - first temperature, then humdity, and combine both panels with cowplot
 temp_plot <- weather_filtered %>%
               ggplot(aes(month_factor, temperature_c_hourly,
