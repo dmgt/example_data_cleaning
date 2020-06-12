@@ -384,7 +384,7 @@ ggsave("weather_plot.png", plot = weather_plot,
 )
 ```
 
-```{r echo = F, fig.width = 6}
+```{r echo=FALSE}
 weather_plot
 ```
 
