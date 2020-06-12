@@ -254,7 +254,7 @@ weather_df_for_table <- outdoor_temp_per_site_baseline %>%
   mutate(delta_rh_pct = mean_hourly_rh_intervention - mean_hourly_rh_baseline)
 ```
 
-```{r, eval = F }
+```{r, eval = F, include = T}
 weather_summary_table <- weather_df_for_table %>%
   gt() %>%
   tab_header(
@@ -292,7 +292,7 @@ weather_summary_table <- weather_df_for_table %>%
 ```
 
 
-```{r message=FALSE, include=FALSE, warnings=F}
+```{r eval = T,  include=F }
 # Code to format weather summary table
 weather_summary_table <- weather_df_for_table %>%
   gt() %>%
