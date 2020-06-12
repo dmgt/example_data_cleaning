@@ -335,7 +335,7 @@ weather_summary_table <- weather_df_for_table %>%
     source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
 ```
 
-<img src="/home/trc/example_data_cleaning/results/delta_t_rh_example_table.png" width="836" />
+<img src="results/delta_t_rh_example_table.png" width="836" />
 
 ### Plot data
 
