@@ -316,7 +316,7 @@ weather_summary_table <- weather_df_for_table %>%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ofnbnasplz .gt_table {
+#gpwczxxkfg .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -339,7 +339,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-left-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_heading {
+#gpwczxxkfg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -351,7 +351,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_title {
+#gpwczxxkfg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -361,7 +361,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-bottom-width: 0;
 }
 
-#ofnbnasplz .gt_subtitle {
+#gpwczxxkfg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -371,13 +371,13 @@ weather_summary_table <- weather_df_for_table %>%
   border-top-width: 0;
 }
 
-#ofnbnasplz .gt_bottom_border {
+#gpwczxxkfg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_col_headings {
+#gpwczxxkfg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -392,7 +392,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_col_heading {
+#gpwczxxkfg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -412,7 +412,7 @@ weather_summary_table <- weather_df_for_table %>%
   overflow-x: hidden;
 }
 
-#ofnbnasplz .gt_column_spanner_outer {
+#gpwczxxkfg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -424,15 +424,15 @@ weather_summary_table <- weather_df_for_table %>%
   padding-right: 4px;
 }
 
-#ofnbnasplz .gt_column_spanner_outer:first-child {
+#gpwczxxkfg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ofnbnasplz .gt_column_spanner_outer:last-child {
+#gpwczxxkfg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ofnbnasplz .gt_column_spanner {
+#gpwczxxkfg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -444,7 +444,7 @@ weather_summary_table <- weather_df_for_table %>%
   width: 100%;
 }
 
-#ofnbnasplz .gt_group_heading {
+#gpwczxxkfg .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -466,7 +466,7 @@ weather_summary_table <- weather_df_for_table %>%
   vertical-align: middle;
 }
 
-#ofnbnasplz .gt_empty_group_heading {
+#gpwczxxkfg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -481,19 +481,19 @@ weather_summary_table <- weather_df_for_table %>%
   vertical-align: middle;
 }
 
-#ofnbnasplz .gt_striped {
+#gpwczxxkfg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ofnbnasplz .gt_from_md > :first-child {
+#gpwczxxkfg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ofnbnasplz .gt_from_md > :last-child {
+#gpwczxxkfg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ofnbnasplz .gt_row {
+#gpwczxxkfg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -512,7 +512,7 @@ weather_summary_table <- weather_df_for_table %>%
   overflow-x: hidden;
 }
 
-#ofnbnasplz .gt_stub {
+#gpwczxxkfg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -524,7 +524,7 @@ weather_summary_table <- weather_df_for_table %>%
   padding-left: 12px;
 }
 
-#ofnbnasplz .gt_summary_row {
+#gpwczxxkfg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -534,7 +534,7 @@ weather_summary_table <- weather_df_for_table %>%
   padding-right: 5px;
 }
 
-#ofnbnasplz .gt_first_summary_row {
+#gpwczxxkfg .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -544,7 +544,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-top-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_grand_summary_row {
+#gpwczxxkfg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -554,7 +554,7 @@ weather_summary_table <- weather_df_for_table %>%
   padding-right: 5px;
 }
 
-#ofnbnasplz .gt_first_grand_summary_row {
+#gpwczxxkfg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -564,7 +564,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-top-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_table_body {
+#gpwczxxkfg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -573,7 +573,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-bottom-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_footnotes {
+#gpwczxxkfg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -587,13 +587,13 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_footnote {
+#gpwczxxkfg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ofnbnasplz .gt_sourcenotes {
+#gpwczxxkfg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -607,47 +607,47 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#ofnbnasplz .gt_sourcenote {
+#gpwczxxkfg .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ofnbnasplz .gt_left {
+#gpwczxxkfg .gt_left {
   text-align: left;
 }
 
-#ofnbnasplz .gt_center {
+#gpwczxxkfg .gt_center {
   text-align: center;
 }
 
-#ofnbnasplz .gt_right {
+#gpwczxxkfg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ofnbnasplz .gt_font_normal {
+#gpwczxxkfg .gt_font_normal {
   font-weight: normal;
 }
 
-#ofnbnasplz .gt_font_bold {
+#gpwczxxkfg .gt_font_bold {
   font-weight: bold;
 }
 
-#ofnbnasplz .gt_font_italic {
+#gpwczxxkfg .gt_font_italic {
   font-style: italic;
 }
 
-#ofnbnasplz .gt_super {
+#gpwczxxkfg .gt_super {
   font-size: 65%;
 }
 
-#ofnbnasplz .gt_footnote_marks {
+#gpwczxxkfg .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="ofnbnasplz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="gpwczxxkfg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table">
 
