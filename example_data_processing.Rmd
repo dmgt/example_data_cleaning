@@ -89,7 +89,7 @@ filter_hvac_failure <- function(input_df) {
 #### Standardize weather data
 
 ##### Add metadata to cleaned data
-``` {r}
+```{r}
 # Append additional metadata info to cleaned weather data 
 weather_info  <- weather_cleaned %>%
    filter(datetime_utc<"2019-10-31 00:00:00")%>%  # Filter for period during field study ie July 2017 - Oct 2020
@@ -300,8 +300,8 @@ weather_summary_table <- weather_df_for_table %>%
     source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
 ```
 
-```{r summarytable, echo=FALSE, fig.width = 7}
-include_graphics(here("results", "delta_t_rh_example_table.PNG"))
+```{r echo=FALSE, fig.width = 7}
+knitr::include_graphics(here("results", "delta_t_rh_example_table.png"))
 ```
 
 ### Plot data

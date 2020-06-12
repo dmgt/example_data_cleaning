@@ -335,7 +335,7 @@ weather_summary_table <- weather_df_for_table %>%
     source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
 ```
 
-<img src="/home/trc/example_data_cleaning/results/delta_t_rh_example_table.PNG" width="836" />
+<img src="/home/trc/example_data_cleaning/results/delta_t_rh_example_table.png" width="836" />
 
 ### Plot data
 
@@ -386,7 +386,7 @@ ggsave("weather_plot.png", plot = weather_plot,
 )
 ```
 
-![](example_data_processing_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](example_data_processing_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### Write about the data with variables calculated inline
 
