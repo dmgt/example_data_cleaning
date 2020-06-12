@@ -3,6 +3,8 @@ data
 ================
 Dana Miller
 
+*Draft as of June 2020*
+
 The examples below are exerpts from a scientific manuscript
 demonstrating common data manipulation and visualization taaks using the
 popular `tidyverse` and `ggplot2` packages in R. My goal is to provide

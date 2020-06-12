@@ -9,6 +9,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+*Draft as of June 2020*
+
 The examples below are exerpts from a scientific manuscript demonstrating common data manipulation and visualization taaks using the popular `tidyverse` and `ggplot2` packages in R. My goal is to provide an accesible introduction to this workflow for users new to RMarkdown documents, using publically avalible data. This is a simplified version of relevant steps when processing, summarizing, and presenting data in a research report or manuscript, demonstrated on one relatively small dataset that is already in a 'tidy' format. 
 
 ```{r setup, message = F, warnings = F}
@@ -298,7 +300,7 @@ weather_summary_table <- weather_df_for_table %>%
     source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
 ```
 
-```{r summarytable, echo=FALSE, fig.width = 8}
+```{r summarytable, echo=FALSE, fig.width = 7}
 include_graphics(here("results", "delta_t_rh_example_table.PNG"))
 ```
 
