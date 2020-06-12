@@ -301,7 +301,7 @@ weather_summary_table <- weather_df_for_table %>%
 ```
 
 ```{r echo=FALSE, fig.width = 7}
-knitr::include_graphics(here("results", "delta_t_rh_example_table.png"))
+knitr::include_graphics(here("results/delta_t_rh_example_table.png"))
 ```
 
 ### Plot data
