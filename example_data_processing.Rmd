@@ -9,34 +9,41 @@ editor_options:
   chunk_output_type: console
 ---
 
-The examples below are exerpts from a scientific manuscript demonstrating common data manipulation and visualization taaks using the popular `tidyverse` and `ggplot2` packages in R. My goal is to provide an accesible introduction to this workflow for users new to RMarkdown documents, using publically avalible data. This is a simplified version of relevant steps when processing, summarizing, and presenting data in a research report or manuscript, demonstrated on one relatively small dataset. 
+The examples below are exerpts from a scientific manuscript demonstrating common data manipulation and visualization taaks using the popular `tidyverse` and `ggplot2` packages in R. My goal is to provide an accesible introduction to this workflow for users new to RMarkdown documents, using publically avalible data. This is a simplified version of relevant steps when processing, summarizing, and presenting data in a research report or manuscript, demonstrated on one relatively small dataset that is already in a 'tidy' format. 
 
-```{r setup, message = F, warning = F, echo = T}
+```{r setup, message = F, warnings = F}
 # Load required libraries
-require(lubridate)  # note lubridate::here conflicts with here::here, specify namespace explicitly when used below
-require(tidyverse)
-require(here)       # package to manage relative file paths
-require(skimr)
-require(cowplot)    # package for additional plotting options
-
-# Skimr options - turn off histograms to allow file to knit to markdown
-skim_with(numeric = list(hist = NULL))
+library(lubridate)  # note lubridate::here conflicts with here::here, specify namespace explicitly when used below
+library(tidyverse)
+library(here)       # package to manage relative file paths
+library(skimr)
+library(cowplot)    # package for additional plotting options
+library(gt)
 ```
 
 ### About the data
 
 ### Load data
 ```{r readDeviceData}
-## Will use convention of `_cleaned` to designate data from `/cleaned_data`, but note that each dataset has substantial additional processing below, eg taking hourly averages, merging with metadata, aligning naming conventions between datasets etc
+# Will use convention of `_cleaned` to designate data read in from `/cleaned_data`, but note that each dataset has 
+# additional processing below, eg taking hourly averages, merging with metadata, aligning naming 
+# conventions between datasets etc
 weather_cleaned <- read_rds(here::here("cleaned_data/allWeather.rds"))
 
 ```
 
 ### Load helper functions
 
+- One helper function is included below. If there were much longer helper functions, they could be stored in a .R script in a dedicated subfolder (often named `/src` by convention) and called here. 
+
 ```{r helperFunctions}
-# Function to remove data from dates during mechanical system failure at one site (unrepresentitive performance data)
+
 filter_hvac_failure <- function(input_df) {
+  # Function to remove data from dates during mechanical system failure at one site
+  # since this period is not representitive to compare to other data
+  
+  # Function input is a dataframe with columns 'datetime_utc_hourly' and 'site'
+  
       site1_filtered <-  input_df %>%
                         filter(site == "Site1") %>% 
                         filter(datetime_utc_hourly < "2018-08-10" | datetime_utc_hourly > "2019-06-24")
@@ -46,19 +53,16 @@ filter_hvac_failure <- function(input_df) {
       
       compressors_field_study_filtered <- bind_rows(site1_filtered, other_sites_filtered) %>% 
                               arrange(datetime_utc_hourly)
-      return(compressors_field_study_filtered )
+      return(compressors_field_study_filtered)
     }
-    
 ```
 
 ### Data standarization
 
-#### Notes for all datasets 
-
-**Conventions as follows:**
+#### Notes for conventions for all datasets (including weather data) 
 
 -  `_hourly` : version of dataset with hourly averages
-- `_info`: version of dataset with the following variables created:
+- `_info`: version of dataset with the following additional variables created:
     - intervention: 'Baseline' or 'Intervention' (based on dates of week fans started operating, in code below)
     - From zone_metadata file
         - hvac_zone_display: eg C1, C2...R1-R6 (C = Commercial, R = Residential)
@@ -75,22 +79,25 @@ filter_hvac_failure <- function(input_df) {
 - The file with info appended, and additionally summarized to hourly averages, will be named `*_hourly` (not `*_hourly_info`) for brevity, if it's hourly the 'info' has alreadly been appended :)
 - Dataframes that have additionally been filtered to remove the HVAC failure period for data from Site 1 (ie dataframe has full timeperiod for site 2-4 data, and Site 1 data only putside of HVAC failure period) are labeled as 'filtered'
 
-``` {r prepWeatherData}
-# Standarization for each dataset below,
-# Note currently only the *hourly* weather file, below, has the RH converted into absolute humdity
+#### Standardize weather data
 
+##### Add metadata to cleaned data
+``` {r}
 # Append additional metadata info to cleaned weather data 
 weather_info  <- weather_cleaned %>%
    filter(datetime_utc<"2019-10-31 00:00:00")%>%  # Filter for period during field study ie July 2017 - Oct 2020
    filter(datetime_utc>"2017-07-18 00:00:00")%>%  
-     select(datetime_utc, temperature_c, humidity_rh, wind_speed_mps, unique_datastream_id, site) %>% # relevant variables
-  mutate(intervention = case_when(   # Create new column reflecting intervention status at each field site at each timestamp              
+    # select relevant columns
+     select(datetime_utc, temperature_c, humidity_rh, wind_speed_mps, unique_datastream_id, site) %>% 
+  mutate(intervention = case_when(   
+    # Create new column reflecting intervention status at each field site at each timestamp              
                 site == "Site1" & datetime_utc <= as_datetime("2018-07-06 00:00:00") ~ "Baseline",
                 site == "Site2" & datetime_utc <= as_datetime("2018-07-13 00:00:00") ~ "Baseline",
                 site == "Site3" & datetime_utc  <= as_datetime("2018-07-20 00:00:00") ~ "Baseline",
                 site == "Site4" & datetime_utc <= as_datetime("2018-07-20 00:00:00") ~ "Baseline",   
                 TRUE ~ "Intervention")) %>%  # Logic assumes that any periods that are not baseline are intervention  
-   mutate(site_display = case_when(  # Create new variable called 'site_display', since Sites 3 and 4 share the same weather file           
+   mutate(site_display = case_when(  
+     # Create new column called 'site_display', since Sites 3 and 4 share the same weather file           
                 site == "Site1" ~ "Site 1",
                 site == "Site2" ~ "Site 2",           
                 site == "Site3" ~ "Site 3 and 4",
@@ -98,31 +105,38 @@ weather_info  <- weather_cleaned %>%
   mutate(month_factor = as.factor(lubridate::month(datetime_utc)),  # Must be formatted as factor for plot formatting
          year_factor = as.factor(lubridate::year(datetime_utc)),
          hour_factor = as.factor(lubridate::year(datetime_utc))) %>%
-  mutate(month = lubridate::month(datetime_utc), # Formatted as numeric for subsequent numeric-based filtering that can't take factors
+  # Additional columsn below formatted as numeric for subsequent numeric-based filtering that can't take factors
+  mutate(month = lubridate::month(datetime_utc),
          year = lubridate::year(datetime_utc),
          yday = lubridate::yday(datetime_utc),
          wday = lubridate::wday(datetime_utc),
          hour = lubridate::hour(datetime_utc)) 
+```
 
-# Take hourly average and add dew point, vapor pressure, and absolute humidity conversion
+##### Create hourly summary and add dew point, vapor pressure, and absolute humidity conversion
+```{r}
 weather_hourly <- weather_info %>% 
-     group_by(datetime_utc_hourly = floor_date(datetime_utc, "hour"), unique_datastream_id,   # Setting time interval 
-              site, intervention, site_display, month_factor, year_factor, hour_factor,       # And selecting columns to track in grouping
-              month, year, hour, yday, wday) %>%
-     mutate(temperature_c_hourly = mean(temperature_c, na.rm=TRUE),  # summarize hourly temperature, humidity, and wind speed values
+     group_by(datetime_utc_hourly = floor_date(datetime_utc, "hour"), unique_datastream_id,  # Setting time interval 
+              site, intervention, site_display, month_factor, year_factor, hour_factor,   
+              month, year, hour, yday, wday) %>%                     # Selecting columns to track in grouping
+    # summarize hourly temperature, humidity, and wind speed values
+     mutate(temperature_c_hourly = mean(temperature_c, na.rm=TRUE),  
             humidity_rh_hourly = mean(humidity_rh, na.rm=TRUE),
             wind_speed_mps_hourly = mean(wind_speed_mps, na.rm=TRUE)) %>%
      ungroup() %>% 
-  select(datetime_utc_hourly, unique_datastream_id, site, temperature_c_hourly, humidity_rh_hourly,   # select columns to keep 
-         wind_speed_mps_hourly, intervention, site_display, month_factor, year_factor, hour_factor, month, year, hour, yday, wday) %>% 
-  distinct() %>%  # Only retain distinct columns (ie drop any duplicate identical rows with same timestamp and same values)
-   mutate(  # see notes below on conversion
+  # select columns to keep 
+     select(datetime_utc_hourly, unique_datastream_id, site, temperature_c_hourly, humidity_rh_hourly,   
+         wind_speed_mps_hourly, intervention, site_display, month_factor, year_factor, hour_factor, 
+         month, year, hour, yday, wday) %>% 
+  distinct() %>%  # Only retain distinct columns 
+                 # (ie drop any duplicate identical rows with same timestamp and same values)
+   mutate(  # see notes below on data conversion
      dew_point_temperature_c_hourly = (243.12*(log(humidity_rh_hourly/100) +17.62*temperature_c_hourly/(243.12+temperature_c_hourly)))/(17.62-(log(humidity_rh_hourly/100) +17.62*temperature_c_hourly/(243.12+temperature_c_hourly))),
          vapour_p_hourly = 6.116441*10^(7.59138*temperature_c_hourly/(temperature_c_hourly+240.726)) * humidity_rh_hourly/100, # in hPa units
          humidity_ah_hourly = 2.16679 * (vapour_p_hourly*100)/(273.15+temperature_c_hourly)) # in g/m3 units
   
 # Notes on estimating absolute humidity
-# Based on from Sonja here: https://github.com/CenterForTheBuiltEnvironment/fans-field-tstats/blob/master/code/hamilton_rh_analysis.Rmd 
+# Based on reference from Sonja here: https://github.com/CenterForTheBuiltEnvironment/fans-field-tstats/blob/master/code/hamilton_rh_analysis.Rmd 
 #approximation of dew point temperature if you know the observed temperature and relative humidity, The dew point is calculated according to the following formula:
 #Ts = (b * α(T,RH)) / (a - α(T,RH))
 #where:
@@ -136,6 +150,10 @@ weather_hourly <- weather_info %>%
 weather_filtered <- filter_hvac_failure(weather_hourly)
 ```
 
+##### Save standarized data frames
+
+- In a lengthy document, the output of the chunks above could be saved, and subsequent steps could start with re-loading the saved output files if the data standardization does not need to be re-run. 
+
 ```{r savePreppedDataFrames, echo = F, eval = F}
 saveRDS(weather_info, file = here::here("standardized_data/weather_info.rds"))
 saveRDS(weather_hourly, file = here::here("standardized_data/weather_hourly.rds"))
@@ -143,13 +161,16 @@ saveRDS(weather_filtered, file = here::here("standardized_data/weather_filtered.
 ```
 
 
-
 ### Summarize data
 
-```{r weatherSummaryOverall, message = F, warning = F, cache = 2}
-# Calculate weather summary variables during April - October, averaged across all sites
+- In this example, we are interested in calculating summary variables for the warmest months of the year, namely April - October. 
+- It is helpful to assign key results to descriptively-named variables (eg `baseline_cooling_period_mean_hourly_oat_c`) to directly these values in calculations or other outputs later
 
-##Temperature - overall average
+#### Across all sites
+```{r weatherSummaryOverall}
+# Calculate mean temperature and humdity during April - October, averaged across all sites, per period
+
+##Temperature - overall averages across all sites
 baseline_cooling_period_mean_hourly_oat_c <- weather_filtered %>%
                                      filter(month >= 4 & month<= 10) %>%
                                      filter(site != "Site4") %>%   # Avoid double counting values from Site 3 and 4 w/ same weather
@@ -158,24 +179,23 @@ baseline_cooling_period_mean_hourly_oat_c <- weather_filtered %>%
 
 intervention_cooling_period_mean_hourly_oat_c <- weather_filtered %>%
                                      filter(month >= 4 & month <= 10) %>%
-                                      filter(site != "Site4") %>%  # Avoid double counting values from Site 3 and 4 w/ same weather
+                                      filter(site != "Site4") %>% 
                                      filter(intervention == "Intervention") %>%
                                      summarise(mean_hourly_temp_c = mean(temperature_c_hourly, na.rm = T))
 
 mean_difference_hourly_oat_c <- round(intervention_cooling_period_mean_hourly_oat_c - baseline_cooling_period_mean_hourly_oat_c, 1)
 
 
-##Humidity
-# Relative - overall
+## Relative humidity -  overall averages across all sites
 baseline_cooling_period_mean_hourly_rh  <- weather_filtered %>%
                                      filter(month >= 4 & month<= 10) %>%
-                                     filter(site != "Site4") %>%  # Avoid double counting values from Site 3 and 4 w/ same weather
+                                     filter(site != "Site4") %>%  
                                      filter(intervention == "Baseline") %>%
                                      summarise(mean_hourly_rh = mean(humidity_rh_hourly, na.rm = T))
 
 intervention_cooling_period_mean_hourly_rh <- weather_filtered %>%
                                      filter(month >= 4 & month <= 10) %>%
-                                      filter(site != "Site4") %>%  # Avoid double counting values from Site 3 and 4 w/ same weather
+                                      filter(site != "Site4") %>% 
                                      filter(intervention == "Intervention") %>%
                                       summarise(mean_hourly_rh = mean(humidity_rh_hourly, na.rm = T))
 
@@ -183,7 +203,8 @@ mean_difference_hourly_rh <- round(intervention_cooling_period_mean_hourly_rh  -
 
 ```
 
-```{r meanDailyHighTemps,}
+```{r}
+# Calculate range of mean daily high temperatures throughout entire field study duration
  mean_daily_high_temps <- weather_filtered %>%
   filter(month >= 4 & month<= 10) %>%
   filter(site != "Site4") %>% # avoid double counting
@@ -191,13 +212,15 @@ mean_difference_hourly_rh <- round(intervention_cooling_period_mean_hourly_rh  -
   summarise(max_daily_temp = max(temperature_c_hourly, na.rm = T),
           mean_daily_temp =mean(temperature_c_hourly, na.rm = T)) %>% 
   ungroup()
- 
+
+# Assign to variables for later use 
 mean_daily_high_temps_c_min <-  min(mean_daily_high_temps$max_daily_temp)
 mean_daily_high_temps_c_max <- max(mean_daily_high_temps$max_daily_temp)
 ```
 
+#### Calculate mean values per site, and make a summary table
 ```{r}
-# Temperature - each site separately
+# Mean temperatures - each site separately
 outdoor_temp_per_site_baseline <- weather_filtered %>%
                                   filter(month >= 4 & month<= 10) %>%
                                   filter(intervention == "Baseline") %>%
@@ -210,12 +233,12 @@ outdoor_temp_per_site_intervention <- weather_filtered %>%
                                      group_by(site_display)%>%
                                      summarise(mean_hourly_temp_c_intervention = mean(temperature_c_hourly, na.rm = T)) 
 
-### Relative - each site separately
+### Mean relative humidities - each site separately
 outdoor_rh_per_site_baseline <- weather_filtered %>%
-                                     filter(month >= 4 & month <= 10) %>%
-                                     filter(intervention == "Baseline") %>%
-                                     group_by(site_display)%>%
-                                     summarise(mean_hourly_rh_baseline = mean(humidity_rh_hourly, na.rm = T)) 
+                                filter(month >= 4 & month <= 10) %>%
+                                filter(intervention == "Baseline") %>%
+                                group_by(site_display)%>%
+                                summarise(mean_hourly_rh_baseline = mean(humidity_rh_hourly, na.rm = T)) 
 
 outdoor_rh_per_site_intervention  <- weather_filtered %>%
                                      filter(month >= 4 & month <= 10) %>%
@@ -232,13 +255,53 @@ weather_df_for_table <- outdoor_temp_per_site_baseline %>%
 ```
 
 ```{r}
-# Format weather summary table
-
+# Code to format weather summary table
+weather_summary_table <- weather_df_for_table %>%
+  gt() %>%
+  tab_header(
+    title = "Outdoor environmental conditions per site",
+    subtitle = "Hourly means during April - October cooling season"
+    ) %>%
+  tab_spanner(
+    label = html("Air temperature [&deg;C]"),
+    columns = vars(mean_hourly_temp_c_baseline, mean_hourly_temp_c_intervention, delta_temp_c)
+    ) %>% 
+   fmt_number(
+    columns = vars(mean_hourly_temp_c_baseline, mean_hourly_temp_c_intervention, delta_temp_c),
+    decimals = 1
+  ) %>%
+  tab_spanner(
+    label = "Relative humidity [%]",
+    columns = vars(mean_hourly_rh_baseline, mean_hourly_rh_intervention, delta_rh_pct)
+    ) %>%  
+   fmt_number(
+    columns = vars(mean_hourly_rh_baseline, mean_hourly_rh_intervention, delta_rh_pct),
+    decimals = 0
+  ) %>%
+  cols_label(
+    site_display = html("Site"),
+    mean_hourly_temp_c_baseline =  html("Baseline"),
+    mean_hourly_temp_c_intervention = html("Intervention"),
+    delta_temp_c = html("&Delta; T"),
+    mean_hourly_rh_baseline = html("Baseline"),
+    mean_hourly_rh_intervention = html("Intervention"),
+    delta_rh_pct = html("&Delta; RH")
+  ) %>%
+  cols_align( align = "center")  %>%
+  tab_source_note(
+    source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
+  
 
 ```
 
+```{r, echo = F, fig.width = 4}
+weather_summary_table
+```
+
+### Plot data
+
 ```{r outdoorconditionsByIntervention, message = F, warning = F, cache = 2}
-# Draw plots
+# Draw plots - first temperature, then humdity, and combine both panels with cowplot
 temp_plot <- weather_filtered %>%
               ggplot(aes(month_factor, temperature_c_hourly,
                          fill = intervention,
@@ -252,6 +315,7 @@ temp_plot <- weather_filtered %>%
          y = "Drybulb temperature °C") +
           theme_bw(base_size = 12) +
   scale_fill_manual(values=c("Baseline"="#F18E3D","Intervention"="#BA5C0E"), labels= c("Baseline", "Intervention"))
+
 rh_humidity_plot <- weather_filtered %>%
               ggplot(aes(month_factor, humidity_rh_hourly,
                          fill = intervention,
@@ -272,6 +336,8 @@ weather_plot <- cowplot::plot_grid(temp_plot, rh_humidity_plot, nrow=2, ncol=1,
                                    align = "v", 
                                    rel_widths = c(1, 1),
                                    rel_heights = c(1, 1.25))
+
+# save results
 ggsave("weather_plot.png", plot = weather_plot, 
        path= here("results"),
        dpi = 300, 
@@ -281,7 +347,7 @@ ggsave("weather_plot.png", plot = weather_plot,
 )
 ```
 
-```{r}
+```{r, echo = F}
 weather_plot
 ```
 
