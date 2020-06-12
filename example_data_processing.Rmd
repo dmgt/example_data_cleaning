@@ -254,7 +254,45 @@ weather_df_for_table <- outdoor_temp_per_site_baseline %>%
   mutate(delta_rh_pct = mean_hourly_rh_intervention - mean_hourly_rh_baseline)
 ```
 
-```{r message=FALSE, warnings= F}
+```{r, eval = F }
+weather_summary_table <- weather_df_for_table %>%
+  gt() %>%
+  tab_header(
+    title = "Outdoor environmental conditions per site",
+    subtitle = "Hourly means during April - October cooling season"
+    ) %>%
+  tab_spanner(
+    label = html("Air temperature [&deg;C]"),
+    columns = vars(mean_hourly_temp_c_baseline, mean_hourly_temp_c_intervention, delta_temp_c)
+    ) %>% 
+   fmt_number(
+    columns = vars(mean_hourly_temp_c_baseline, mean_hourly_temp_c_intervention, delta_temp_c),
+    decimals = 1
+  ) %>%
+  tab_spanner(
+    label = "Relative humidity [%]",
+    columns = vars(mean_hourly_rh_baseline, mean_hourly_rh_intervention, delta_rh_pct)
+    ) %>%  
+   fmt_number(
+    columns = vars(mean_hourly_rh_baseline, mean_hourly_rh_intervention, delta_rh_pct),
+    decimals = 0
+  ) %>%
+  cols_label(
+    site_display = html("Site"),
+    mean_hourly_temp_c_baseline =  html("Baseline"),
+    mean_hourly_temp_c_intervention = html("Intervention"),
+    delta_temp_c = html("&Delta; T"),
+    mean_hourly_rh_baseline = html("Baseline"),
+    mean_hourly_rh_intervention = html("Intervention"),
+    delta_rh_pct = html("&Delta; RH")
+  ) %>%
+  cols_align( align = "center")  %>%
+  tab_source_note(
+    source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
+```
+
+
+```{r message=FALSE, include=FALSE, warnings=F}
 # Code to format weather summary table
 weather_summary_table <- weather_df_for_table %>%
   gt() %>%
@@ -291,7 +329,6 @@ weather_summary_table <- weather_df_for_table %>%
   tab_source_note(
     source_note = html("Data from NOAA Local Climactic Data monitoring stations WBAN:23237 (Site 1), WBAN:23257 (Site 2), and WBAN:93242 (Sites 3 and 4)"))
   
-
 ```
 
 ```{r, echo = F, fig.width = 4}
@@ -347,7 +384,7 @@ ggsave("weather_plot.png", plot = weather_plot,
 )
 ```
 
-```{r, echo = F}
+```{r, echo = F, fig.width = 8}
 weather_plot
 ```
 

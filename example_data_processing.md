@@ -273,7 +273,6 @@ weather_df_for_table <- outdoor_temp_per_site_baseline %>%
 ```
 
 ``` r
-# Code to format weather summary table
 weather_summary_table <- weather_df_for_table %>%
   gt() %>%
   tab_header(
@@ -316,7 +315,7 @@ weather_summary_table <- weather_df_for_table %>%
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#gpwczxxkfg .gt_table {
+#dhnstuavqm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -339,7 +338,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-left-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_heading {
+#dhnstuavqm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -351,7 +350,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_title {
+#dhnstuavqm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -361,7 +360,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-bottom-width: 0;
 }
 
-#gpwczxxkfg .gt_subtitle {
+#dhnstuavqm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -371,13 +370,13 @@ weather_summary_table <- weather_df_for_table %>%
   border-top-width: 0;
 }
 
-#gpwczxxkfg .gt_bottom_border {
+#dhnstuavqm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_col_headings {
+#dhnstuavqm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -392,7 +391,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_col_heading {
+#dhnstuavqm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -412,7 +411,7 @@ weather_summary_table <- weather_df_for_table %>%
   overflow-x: hidden;
 }
 
-#gpwczxxkfg .gt_column_spanner_outer {
+#dhnstuavqm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -424,15 +423,15 @@ weather_summary_table <- weather_df_for_table %>%
   padding-right: 4px;
 }
 
-#gpwczxxkfg .gt_column_spanner_outer:first-child {
+#dhnstuavqm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gpwczxxkfg .gt_column_spanner_outer:last-child {
+#dhnstuavqm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gpwczxxkfg .gt_column_spanner {
+#dhnstuavqm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -444,7 +443,7 @@ weather_summary_table <- weather_df_for_table %>%
   width: 100%;
 }
 
-#gpwczxxkfg .gt_group_heading {
+#dhnstuavqm .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -466,7 +465,7 @@ weather_summary_table <- weather_df_for_table %>%
   vertical-align: middle;
 }
 
-#gpwczxxkfg .gt_empty_group_heading {
+#dhnstuavqm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -481,19 +480,19 @@ weather_summary_table <- weather_df_for_table %>%
   vertical-align: middle;
 }
 
-#gpwczxxkfg .gt_striped {
+#dhnstuavqm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gpwczxxkfg .gt_from_md > :first-child {
+#dhnstuavqm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gpwczxxkfg .gt_from_md > :last-child {
+#dhnstuavqm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gpwczxxkfg .gt_row {
+#dhnstuavqm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -512,7 +511,7 @@ weather_summary_table <- weather_df_for_table %>%
   overflow-x: hidden;
 }
 
-#gpwczxxkfg .gt_stub {
+#dhnstuavqm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -524,7 +523,7 @@ weather_summary_table <- weather_df_for_table %>%
   padding-left: 12px;
 }
 
-#gpwczxxkfg .gt_summary_row {
+#dhnstuavqm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -534,7 +533,7 @@ weather_summary_table <- weather_df_for_table %>%
   padding-right: 5px;
 }
 
-#gpwczxxkfg .gt_first_summary_row {
+#dhnstuavqm .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -544,7 +543,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-top-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_grand_summary_row {
+#dhnstuavqm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -554,7 +553,7 @@ weather_summary_table <- weather_df_for_table %>%
   padding-right: 5px;
 }
 
-#gpwczxxkfg .gt_first_grand_summary_row {
+#dhnstuavqm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -564,7 +563,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-top-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_table_body {
+#dhnstuavqm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -573,7 +572,7 @@ weather_summary_table <- weather_df_for_table %>%
   border-bottom-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_footnotes {
+#dhnstuavqm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -587,13 +586,13 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_footnote {
+#dhnstuavqm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#gpwczxxkfg .gt_sourcenotes {
+#dhnstuavqm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -607,47 +606,47 @@ weather_summary_table <- weather_df_for_table %>%
   border-right-color: #D3D3D3;
 }
 
-#gpwczxxkfg .gt_sourcenote {
+#dhnstuavqm .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#gpwczxxkfg .gt_left {
+#dhnstuavqm .gt_left {
   text-align: left;
 }
 
-#gpwczxxkfg .gt_center {
+#dhnstuavqm .gt_center {
   text-align: center;
 }
 
-#gpwczxxkfg .gt_right {
+#dhnstuavqm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gpwczxxkfg .gt_font_normal {
+#dhnstuavqm .gt_font_normal {
   font-weight: normal;
 }
 
-#gpwczxxkfg .gt_font_bold {
+#dhnstuavqm .gt_font_bold {
   font-weight: bold;
 }
 
-#gpwczxxkfg .gt_font_italic {
+#dhnstuavqm .gt_font_italic {
   font-style: italic;
 }
 
-#gpwczxxkfg .gt_super {
+#dhnstuavqm .gt_super {
   font-size: 65%;
 }
 
-#gpwczxxkfg .gt_footnote_marks {
+#dhnstuavqm .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="gpwczxxkfg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="dhnstuavqm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table">
 
@@ -959,4 +958,4 @@ ggsave("weather_plot.png", plot = weather_plot,
 )
 ```
 
-![](example_data_processing_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](example_data_processing_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
